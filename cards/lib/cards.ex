@@ -37,7 +37,7 @@ defmodule Cards do
 
   def save(deck, filename) do
     binary = :erlang.term_to_binary(deck)
-    File.write(filename, deck)
+    File.write(filename, binary)
   end
 
   def load(filename) do
@@ -47,5 +47,11 @@ defmodule Cards do
       :ok -> :erlang.binary_to_term(binary)
       :error -> "Error reading file"
     end
+  end
+
+  def create_hand(hand_size) do
+    Cards.create_deck()
+    |> Cards.shuffle()
+    |> Cards.deal(hand_size)
   end
 end
